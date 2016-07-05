@@ -1,0 +1,9 @@
+[Unit]
+Description=wvdial service
+
+[Service]
+ExecStart=/usr/bin/wvdial
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

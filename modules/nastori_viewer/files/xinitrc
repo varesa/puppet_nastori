@@ -1,0 +1,5 @@
+# X power saving options, sourced by /etc/X11/Xsession
+
+xset s off # don't activate screensaver
+xset -dpms # disable DPMS (Energy Star) features.
+xset s noblank # don't blank the video

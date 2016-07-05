@@ -1,0 +1,1 @@
+include nastori_viewer

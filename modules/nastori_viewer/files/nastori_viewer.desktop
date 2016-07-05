@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=nastori_viewer
+Comment=Nastori viewer
+Exec=/home/nastori/viewer/webviewer
+Path=/home/nastori/viewer/
