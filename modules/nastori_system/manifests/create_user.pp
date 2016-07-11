@@ -2,8 +2,9 @@ class nastori_system::create_user {
   include nastori_system::params
 
 user { "${nastori_system::params::user}":
-    home => "${nastori_system::params::homedir}",
-    password => "${nastori_system::params::password}"
+    managehome => true,
+    home       => "${nastori_system::params::homedir}",
+    password   => "${nastori_system::params::password}"
 }
 
 #  exec { "create_user":
