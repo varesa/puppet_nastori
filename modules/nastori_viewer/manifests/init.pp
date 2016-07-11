@@ -10,8 +10,11 @@
 #
 # Sample Usage:
 #
-class nastori_viewer {
-  require nastori_viewer::viewer
+class nastori_viewer($devel = false) {
   require nastori_viewer::session
   require nastori_viewer::noblank
+
+  class {'nastori_viewer::viewer':
+  	devel => $devel
+  }
 }
