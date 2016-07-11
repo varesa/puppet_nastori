@@ -6,4 +6,5 @@ class nastori_viewer::params {
   $git_dest     = "${homedir}/viewer"
 
   $viewer_url   = "http://localhost/"
+  $geom         = "1080x1920"
 }

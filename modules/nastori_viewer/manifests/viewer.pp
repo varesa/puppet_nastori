@@ -6,7 +6,8 @@ class nastori_viewer::viewer {
         ensure   => "latest",
         provider => "git",
         source   => $nastori_viewer::params::git_url,
-        revision => $nastori_viewer::params::git_revision
+        revision => $nastori_viewer::params::git_revision,
+        notify   => Exec["viewer_qmake"]
     }
 
     package { "qt4-default":
@@ -21,7 +22,8 @@ class nastori_viewer::viewer {
         command => "qmake",
         path    => "/usr/bin/",
         cwd     => $nastori_viewer::params::git_dest,
-        creates => "${nastori_viewer::params::git_dest}/Makefile"
+        creates => "${nastori_viewer::params::git_dest}/Makefile",
+        notify  => Exec["viewer_make"]
     }
 
     Package['qt4-default'] -> Exec['viewer_qmake']
@@ -40,7 +42,14 @@ class nastori_viewer::viewer {
         path    => "/usr/bin/",
         cwd     => $nastori_viewer::params::git_dest,
         creates => "${nastori_viewer::params::git_dest}/webviewer",
-        timeout => 1800
+        timeout => 1800,
+        #notify  => Exec["reboot"]
+    }
+
+    exec { "reboot":
+        command     => "reboot",
+        path        => "/sbin/",
+        refreshonly => true
     }
 
     Package['make'] -> Exec['viewer_make']
@@ -50,6 +59,13 @@ class nastori_viewer::viewer {
 
     file { "/home/nastori/url.txt":
         ensure  => "file",
+        owner   => "nastori",
         content => $nastori_viewer::params::viewer_url
+    }
+    
+    file { "/home/nastori/geom.txt":
+        ensure  => "file",
+        owner   => "nastori",
+        content => $nastori_viewer::params::geom
     }
 }
