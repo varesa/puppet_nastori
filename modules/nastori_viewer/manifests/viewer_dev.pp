@@ -1,7 +1,8 @@
 class nastori_viewer::viewer_dev {
     include nastori_viewer::params
+    require git
 
-    $packages = [ 'git', 'g++', 'libqtwebkit-dev', 'make', 'qt4-default' ]
+    $packages = [ 'g++', 'libqtwebkit-dev', 'make', 'qt4-default' ]
   
     package { $packages:
         ensure => "present"
