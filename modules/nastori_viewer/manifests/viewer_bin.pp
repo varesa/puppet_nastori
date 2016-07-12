@@ -13,7 +13,7 @@ class nastori_viewer::viewer_bin($reboot = false) {
     if($reboot) {
         $notify = Exec["reboot"]
     } else {
-        $notify = ""
+        $notify = undef
     }
 
     package { $packages:
