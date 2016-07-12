@@ -1,16 +1,5 @@
-# Class: nastori_viewer
-#
-# This module manages nastori_viewer
-#
-# Parameters: none
-#
-# Actions:
-#
-# Requires: see Modulefile
-#
-# Sample Usage:
-#
-class nastori_viewer($devel = false) {
+
+class nastori_viewer($devel = false, $reboot = false) {
   require nastori_viewer::session
   require nastori_viewer::noblank
 

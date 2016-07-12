@@ -1,7 +1,23 @@
-class nastori_viewer::viewer ($devel = false){
+class nastori_viewer::viewer ($devel = false, $reboot = false){
 	if($devel == true) {
-		require nastori_viewer::viewer_dev
+		class {'nastori_viewer::viewer_dev':
+			reboot => $reboot
+		}
 	} else {
-		require nastori_viewer::viewer_bin
+		class {'nastori_viewer::viewer_bin':
+			reboot => $reboot
+		}
 	}
+
+    file { "/home/nastori/url.txt":
+        ensure  => "file",
+        owner   => "nastori",
+        content => $nastori_viewer::params::viewer_url
+    }
+    
+    file { "/home/nastori/geom.txt":
+        ensure  => "file",
+        owner   => "nastori",
+        content => $nastori_viewer::params::geom
+    }
 }

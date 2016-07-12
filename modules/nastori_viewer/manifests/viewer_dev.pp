@@ -1,4 +1,4 @@
-class nastori_viewer::viewer_dev {
+class nastori_viewer::viewer_dev($reboot) {
     include nastori_viewer::params
     require git
 
@@ -11,7 +11,7 @@ class nastori_viewer::viewer_dev {
     vcsrepo { $nastori_viewer::params::git_dest:
         ensure   => "latest",
         provider => "git",
-        source   => $nastori_viewer::params::git_url,
+        source   => $nastori_viewer::params::git_url_dev,
         revision => $nastori_viewer::params::git_revision,
         notify   => Exec["viewer_qmake"]
     }
@@ -35,22 +35,11 @@ class nastori_viewer::viewer_dev {
         #notify  => Exec["reboot"]
     }
     ->
-    exec { "reboot":
-        command     => "reboot",
-        path        => "/sbin/",
-        refreshonly => true
-    }
-
-    
-    file { "/home/nastori/url.txt":
-        ensure  => "file",
-        owner   => "nastori",
-        content => $nastori_viewer::params::viewer_url
-    }
-    
-    file { "/home/nastori/geom.txt":
-        ensure  => "file",
-        owner   => "nastori",
-        content => $nastori_viewer::params::geom
-    }
+    if($reboot) {
+        exec { "reboot":
+            command     => "reboot",
+            path        => "/sbin/",
+            refreshonly => true
+        }
+    }  
 }
