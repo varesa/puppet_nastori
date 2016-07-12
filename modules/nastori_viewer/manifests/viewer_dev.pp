@@ -4,6 +4,18 @@ class nastori_viewer::viewer_dev($reboot) {
 
     $packages = [ 'g++', 'libqtwebkit-dev', 'make', 'qt4-default' ]
   
+    exec { "reboot":
+            command     => "reboot",
+            path        => "/sbin/",
+            refreshonly => true
+    }
+
+    if($reboot) {
+        $notify = Exec["reboot"]
+    } else {
+        $notify = ""
+    }
+
     package { $packages:
         ensure => "present"
     }
@@ -32,14 +44,8 @@ class nastori_viewer::viewer_dev($reboot) {
         #creates => "${nastori_viewer::params::git_dest}/webviewer",
         refreshonly => true,
         timeout => 2000,
-        #notify  => Exec["reboot"]
+        notify  => $notify
     }
-    ->
-    if($reboot) {
-        exec { "reboot":
-            command     => "reboot",
-            path        => "/sbin/",
-            refreshonly => true
-        }
-    }  
+
+
 }

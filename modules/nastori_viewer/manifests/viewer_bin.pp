@@ -4,6 +4,18 @@ class nastori_viewer::viewer_bin($reboot = false) {
 
     $packages = [ 'libqtwebkit-dev', 'qt4-default' ]
   
+    exec { "reboot":
+            command     => "reboot",
+            path        => "/sbin/",
+            refreshonly => true
+    }
+
+    if($reboot) {
+        $notify = Exec["reboot"]
+    } else {
+        $notify = ""
+    }
+
     package { $packages:
         ensure => "present"
     }
@@ -12,14 +24,7 @@ class nastori_viewer::viewer_bin($reboot = false) {
         ensure   => "latest",
         provider => "git",
         source   => $nastori_viewer::params::git_url_bin,
-        revision => $nastori_viewer::params::git_revision
+        revision => $nastori_viewer::params::git_revision,
+        notify   => $notify
     }
-    ->
-    if($reboot) {
-        exec { "reboot":
-            command     => "reboot",
-            path        => "/sbin/",
-            refreshonly => true
-        }
-    }   
 }
