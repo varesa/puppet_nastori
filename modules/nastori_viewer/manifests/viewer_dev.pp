@@ -23,6 +23,7 @@ class nastori_viewer::viewer_dev($reboot) {
     vcsrepo { $nastori_viewer::params::git_dest:
         ensure   => "latest",
         provider => "git",
+        force    => "true",
         source   => $nastori_viewer::params::git_url_dev,
         revision => $nastori_viewer::params::git_revision,
         notify   => Exec["viewer_qmake"]

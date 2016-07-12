@@ -23,6 +23,7 @@ class nastori_viewer::viewer_bin($reboot = false) {
     vcsrepo { $nastori_viewer::params::git_dest:
         ensure   => "latest",
         provider => "git",
+        force    => "true",
         source   => $nastori_viewer::params::git_url_bin,
         revision => $nastori_viewer::params::git_revision,
         notify   => $notify
